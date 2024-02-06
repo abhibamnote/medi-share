@@ -1,5 +1,5 @@
 const express = require('express')
-const { handleCredentialEntry, generateHash } = require('../controllers/comms.controllers')
+const { handleCredentialEntry, generateHash, verifyRecords } = require('../controllers/comms.controllers')
 // const { getAllUsers, createUser, getUserById, deleteUser, updateUser } = require('../controllers/userController')
 
 const router = express.Router()
@@ -13,5 +13,6 @@ router.post('/credential', handleCredentialEntry)
 
 router.post('/credential/hash', generateHash)
 
+router.post('/verify', verifyRecords)
 
 module.exports = router

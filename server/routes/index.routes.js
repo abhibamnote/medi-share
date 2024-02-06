@@ -5,6 +5,8 @@ router.get('/', (req, res) =>{
     res.send("Hello World")
 })
 
+router.post('/upload', )
+
 
 
 module.exports = router;

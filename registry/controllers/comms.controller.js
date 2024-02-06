@@ -40,4 +40,12 @@ const generateHash = async (req, res) => {
     }
 }
 
-module.exports = { handleCredentialEntry, generateHash }
+const verifyRecords = async (req, res) => {
+    const data = req.body
+    const credentials = data.crendentials;
+    credentials.forEach(element => {
+
+    });
+}
+
+module.exports = { handleCredentialEntry, generateHash, verifyRecords }
