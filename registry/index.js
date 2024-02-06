@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 //server details
 const app = express()
 const PORT = 5000;
-const url = "mongodb://127.0.0.1:27017/registry"
+const url = "mongodb://127.0.0.1:27017/medishare"
 
 mongoose
     .connect(url)
