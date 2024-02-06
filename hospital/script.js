@@ -42,7 +42,7 @@ form.addEventListener('submit', (e) => {
         }
     }
     
-    axios.post('http://localhost:8000/api/upload', sendData)
+    axios.post('http://localhost:5050/api/upload', sendData)
     .then(function (response) {
         console.log(response)
     })
