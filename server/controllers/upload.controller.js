@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const VerifiableCredential = require('../models/verifiableCredential.model')
+const axios = require('axios');
 
 const requestPublicKey = async (req, res) => {
     const data = req.body
@@ -14,15 +15,17 @@ const requestPublicKey = async (req, res) => {
 
 const uploadData = async (req, res) => {
     const uploadData = req.body
+    const user = req.user;
     // console.log(uploadData)
     try {
         const result =  await VerifiableCredential.create({
             header: {
                 fileType: uploadData.header.fileType,
                 reportType: uploadData.header.reportType,
-                issuerId: uploadData.header.issuerId,
+                issuerId: user.userId,
+                userId: uploadData.header.userId,
                 credentialId: uploadData.header.credentialId,
-                createdAt: Date.now()
+                createdAt: uploadData.header.createdAt
             },
             credentialData: {
                 data: uploadData.credential.data
@@ -33,7 +36,23 @@ const uploadData = async (req, res) => {
                 hash: uploadData.signature.hash
             }
         })
-        return res.status(200).json({msg: "data inserted"})
+
+        const {header, signature} = result;
+
+        const signatureData = {
+            header,
+            signature
+        }
+
+        const response = await axios.post('http://127.0.0.1:5000/registry/credential', signatureData);
+
+        if(response.data.success){
+            return res.status(200).json({msg: "data inserted"})
+        }
+
+        VerifiableCredential.findByIdAndDelete({_id: result._id});
+        res.status(401).json({msg: "Not inserted"});
+        
     } catch (error) {
         console.log(error);
         return res.status(400).send(error)

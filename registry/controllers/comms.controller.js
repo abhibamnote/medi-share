@@ -13,18 +13,20 @@ const handleCredentialEntry = async (req, res) => {
                    fileType: data.header.fileType,
                    reportType: data.header.reportType,
                    issuerId: data.header.issuerId,
+                   userId: data.header.userId,
                    credentialId: data.header.credentialId,
                    createdAt: Date.now()
                 },
                 signature: {
                     algorithm: data.signature.algorithm,
-                    nonce: data.signature.nonce,
+                    nounce: data.signature.nounce,
                     hash: data.signature.hash
                 }
             })
         }
-        return res.status(200).json({msg: "data inserted"})
+        return res.status(200).json({success: true, msg: "data inserted"})
     } catch (error) {
+        console.log(error);
         return res.send(error)
     }
 }
