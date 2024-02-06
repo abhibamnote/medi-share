@@ -14,6 +14,10 @@ const credentialSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        userId:{
+            type: String,
+            required: true
+        },
         credentialId: {
             type: String,
             required: true
@@ -28,7 +32,7 @@ const credentialSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        nonce: {
+        nounce: {
             type: String,
             required: true
         },
@@ -42,4 +46,4 @@ const credentialSchema = new mongoose.Schema({
 
 const Credential = mongoose.model('Credential', credentialSchema);
 
-module.exports = { Credential }
+module.exports = Credential
