@@ -1,4 +1,4 @@
-const { Credential } = require('../models/credential.model')
+const Credential = require('../models/credential.model')
 const { createHash } = require('crypto');
 
 const handleCredentialEntry = async (req, res) => {

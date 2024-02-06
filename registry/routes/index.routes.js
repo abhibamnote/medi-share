@@ -1,5 +1,5 @@
 const express = require('express')
-const { handleCredentialEntry, generateHash, verifyRecords } = require('../controllers/comms.controllers')
+const { handleCredentialEntry, generateHash, verifyRecords } = require('../controllers/comms.controller')
 // const { getAllUsers, createUser, getUserById, deleteUser, updateUser } = require('../controllers/userController')
 
 const router = express.Router()

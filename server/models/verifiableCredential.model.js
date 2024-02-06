@@ -11,8 +11,9 @@ const VerifiableCredentialSchema = new mongoose.Schema({
             required: true
         },
         issuerId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            type: String
+            // type: mongoose.Schema.Types.ObjectId,
+            // ref: "User"
         },
         credentialId: {
             type: String,

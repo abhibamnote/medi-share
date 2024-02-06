@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DB_NAME = "registry";
+const DB_NAME = "server";
 require('dotenv').config();
 
 const connectDB = async () =>{
