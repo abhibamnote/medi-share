@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requestPublicKey, uploadData } = require('../controllers/upload.controller')
+const { requestPublicKey, uploadData, getOwnReports } = require('../controllers/upload.controller')
 
 const authRoute = require('./auth.routes');
 const authenticate = require('../middleware/checkAuth');
@@ -16,6 +16,6 @@ router.post('/get-key', authenticate, checkRole(['hospital']), requestPublicKey)
 
 router.use('/auth', authRoute);
 
-
+router.get('/view', authenticate, checkRole(["patient"]), getOwnReports)
 
 module.exports = router;

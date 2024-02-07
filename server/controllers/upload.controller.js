@@ -59,4 +59,17 @@ const uploadData = async (req, res) => {
     }
 }
 
-module.exports = { requestPublicKey, uploadData }
+const getOwnReports = async (req, res) => {
+    const user = req.user
+    try {
+        if(!user) throw error
+        const allReports = User.find({ userId: user.userId })
+        return res.status(200).send(allReports)
+    } catch (error) {
+        console.log(error)
+        return res.status(404).send(error)
+    }
+
+}
+
+module.exports = { requestPublicKey, uploadData, getOwnReports }
