@@ -35,7 +35,7 @@ const registerUser = async (req, res) =>{
 
 const loginUser = async (req, res) =>{
     try {
-        const {userId, password, role} = req.body;
+        const {userId, password} = req.body;
 
         const user = await User.findOne({userId: userId});
 
@@ -43,13 +43,6 @@ const loginUser = async (req, res) =>{
             return res.status(404).json({
                 success: false,
                 message: "User not found"
-            })
-        }
-
-        if(user.role != role){
-            return res.status(400).json({
-                success: false,
-                message: "Role does not match"
             })
         }
 
@@ -71,7 +64,10 @@ const loginUser = async (req, res) =>{
             return res.status(200).json({
                 success: true,
                 message: "Signed in successfully",
-                data: token
+                data: {
+                    token: token,
+                    role: user.role
+                }
             })
         }
 
