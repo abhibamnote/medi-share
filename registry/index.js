@@ -1,6 +1,7 @@
 const express = require('express')
 const registryRouter = require('./routes/index.routes')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 //server details
 const app = express()
@@ -14,6 +15,7 @@ mongoose
 
 
 app.use(express.json());
+app.use(cors())
 
 //Routes
 app.use('/registry', registryRouter)

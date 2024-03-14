@@ -18,6 +18,7 @@ router.post('/get-key', authenticate, checkRole(['hospital']), requestPublicKey)
 router.use('/auth', authRoute);
 
 router.get('/view', authenticate, checkRole(["patient"]), getOwnReports)
+
 router.post('/requestData', giveConsent)
 
 module.exports = router;

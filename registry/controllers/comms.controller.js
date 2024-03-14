@@ -44,10 +44,21 @@ const generateHash = async (req, res) => {
 
 const verifyRecords = async (req, res) => {
     const data = req.body
-    const credentials = data.crendentials;
-    credentials.forEach(element => {
+    let verification = false
+    for(const item of data) {
+        const hash = await Credential.findOne({"header.credentialId": item.header.credentialId})
+        if(hash.signature.hash == item.signature.hash) {
+            verification = true
+        } else {
+            verification = false
+        }
 
-    });
+        if(verification === true) {
+            return res.send(true)
+        } else {
+            return res.send(false)
+        }
+    }
 }
 
 module.exports = { handleCredentialEntry, generateHash, verifyRecords }

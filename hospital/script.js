@@ -98,4 +98,11 @@ const verifyRecords = () => {
     }
 
     console.log(verifyData);
+    axios.post('http://localhost:5000/registry/verify', verifyData)
+    .then(function (response) {
+        console.log(response)
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 };
