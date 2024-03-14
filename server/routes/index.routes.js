@@ -5,8 +5,10 @@ const { requestPublicKey, uploadData, getOwnReports } = require('../controllers/
 const authRoute = require('./auth.routes');
 const authenticate = require('../middleware/checkAuth');
 const checkRole = require('../middleware/checkRole');
+const User = require('../models/user.model');
 
-router.get('/', (req, res) =>{
+router.get('/', async (req, res) =>{
+    
     res.send("Hello World")
 })
 
