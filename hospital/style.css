@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+button:hover {
+    cursor: pointer;
+}
+
+.container {
+    width: 100%;
+}
+.navbar {
+    background: rgb(35, 35, 104);
+    padding: 1em 2em;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+.navbar .login button{
+    padding: 0.3em 1.5em;
+    border: none;
+    background: white;
+    color: rgb(35, 35, 104);
+    font-weight: 600;
+    font-size: 1em;
+}
+.content {
+    display: flex;
+}
+.content .records, .notifications {
+    width: 50%;
+    margin: 0.5em;
+    border: 1px solid gray;
+    height: 88vh;
+    overflow-y: scroll;
+    padding-top: 1em;
+}
+.container .records h2, .notifications .title {
+    padding-bottom: 0.7em;
+    padding-left: 0.7em;
+    border-bottom: 1px solid gray;
+}
+.container .notifications .title {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 0.7em;
+    align-items: center;
+}
+.notifications .title button {
+    background-color: green;
+    border: none;
+    padding: 0.5em 1em;
+    color: white;
+    font-weight: bolder;
+}
