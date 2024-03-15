@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medishare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <h2>MEDI-SHARE</h2>
+            </div>
+            <div class="login">
+                <button>Login</button>
+            </div>
+        </div>
+        <div class="content">
+            <div class="records">
+                <h2>Upload Data</h2>
+
+                <div class="upload-form">
+                    <form id="form">
+                        <div>
+                            <label for="reportType">Report Type:</label>
+                            <input type="text" id="reportType" name="reportType" required>
+                        </div>
+                        <div>
+                            <label for="userID">User ID:</label>
+                            <input type="text" id="userID" name="userID" required>
+                        </div>
+                        <div>
+                            <label for="data">Data:</label>
+                            <textarea id="data" name="data" rows="4" cols="50" required></textarea>
+                        </div>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="notifications">
+                <div class="title">
+                    <h2>Request Patient Data</h2>
+                </div>
+                <div class="search-patient">
+                    <form action="" method="POST">
+                        <input type="text" placeholder="Search patient using ID">
+                        <button type="submit">Seacrh</button>
+                    </form>
+
+                    <div class="patient-data">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+<script src="script.js"></script>
+
+</html>

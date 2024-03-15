@@ -48,10 +48,74 @@ button:hover {
     padding-right: 0.7em;
     align-items: center;
 }
-.notifications .title button {
+.notifications .search-patient form {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.notifications .search-patient button, .notifications .title button {
     background-color: green;
     border: none;
     padding: 0.5em 1em;
     color: white;
     font-weight: bolder;
+    border-radius: 5px;
+}
+.notifications .search-patient {
+    margin: 1em;
+}
+.notifications .search-patient input {
+    width: 88%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+
+.upload-form form {
+    /* max-width: 500px; */
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+.upload-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.upload-form input[type="text"],
+.upload-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.upload-form textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+.upload-form button[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.upload-form button[type="submit"]:hover {
+    background-color: #45a049;
 }
