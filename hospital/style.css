@@ -48,7 +48,7 @@ button:hover {
     padding-right: 0.7em;
     align-items: center;
 }
-.notifications .search-patient form {
+.notifications .search-patient #searchPatient {
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -64,7 +64,7 @@ button:hover {
 .notifications .search-patient {
     margin: 1em;
 }
-.notifications .search-patient input {
+.notifications .search-patient #searchPatient input {
     width: 88%;
     padding: 10px;
     margin-bottom: 20px;
@@ -118,4 +118,22 @@ button:hover {
 
 .upload-form button[type="submit"]:hover {
     background-color: #45a049;
+}
+
+.patient-data form #patient-checklist {
+    margin: 1em;
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    width: 100%;
+}
+#patient-checklist input, #patient-checklist label {
+    margin-bottom: 1em;
+}
+
+.patient-data form input[type="submit"] {
+    padding: 0.5em 1em;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    font-weight: 600;
 }
