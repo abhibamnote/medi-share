@@ -207,7 +207,37 @@ if(document.getElementById('searchPatient')){
 let patientPuKey;
 
 const loadPatientHospital = (data) =>{
-    console.log(data);
+    console.log(data.content);
+    const patientChecklist = document.getElementById("patient-checklist")
+    for(let i = 0; i < data.content.length; i++) {
+        patientChecklist.innerHTML += `
+            <input type="checkbox" value="${data.content[i]._id}">
+            <label for="Report Type">${data.content[i].header.reportType}</label>
+        `
+    }
 
+}
+
+const sendDataRequest = (e) => {
     
+    const reqForm = document.getElementById("request-form")
+    
+    // reqForm.addEventListener('submit', ()=>{
+        event.preventDefault()
+        console.log("jaihsdkja")
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        var checkboxValues = [];
+    
+        checkboxes.forEach(function(checkbox) {
+            checkboxValues.push(checkbox.value);
+        });
+    
+        console.log(checkboxValues)
+    // })
+    
+    axios
+        .post("http://localhost:5050/api/req/give-consent", {
+            ownerId: , 
+            consent: true
+        })
 }

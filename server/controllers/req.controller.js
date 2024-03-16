@@ -20,7 +20,7 @@ const getData = async (requestHeader) => {
     for(const cred of requestHeader.credentialId){
         const content = await VerifiableCredential.findOne({ 
             "header.userId": requestHeader.ownerId, 
-            "header.reportType": cred
+            "header.credentialId": cred
         })
         // console.log(content)
         result.push(content)
@@ -36,7 +36,7 @@ const getPatient = async (req, res) =>{
 
         const user = await User.findOne({userId: userId});
 
-        const content = await VerifiableCredential.findOne({ 
+        const content = await VerifiableCredential.find({ 
             "header.userId": userId
         })
 
