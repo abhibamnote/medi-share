@@ -1,63 +1,66 @@
 // const { createHash } = require('crypto');
+if (document.getElementById("reportForm")) {
+    const form = document.getElementById("reportForm");
 
-const form = document.getElementById('form');
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const report = document.getElementById("reportType").value;
+        const user = document.getElementById("userID").value;
+        const reportData = document.getElementById("data").value;
+        // alert("Button clicked")
+        const token = localStorage.getItem("token");
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const report = document.getElementById('reportType').value
-    const user = document.getElementById('userID').value
-    const reportData = document.getElementById('data').value
-    // alert("Button clicked")
+        const hashData = {
+            header: {
+                fileType: "VC",
+                reportType: report,
+                userId: user,
+                credentialId: Date.now(),
+                createdAt: Date.now(),
+            },
+            credential: {
+                data: reportData,
+            },
+        };
+        const hash = CryptoJS.SHA256(JSON.stringify(hashData));
 
-    const hashData = {
-        header: {
-            fileType: "VC",
-            reportType: report,
-            userId: user,
-            credentialId: Date.now(),
-            createdAt: Date.now()
-        }, 
-        credential: {
-            data: reportData
-        }
-    }
-    const hash = CryptoJS.SHA256(JSON.stringify(hashData))
-    
-    console.log(hash.toString(CryptoJS.enc.Hex))
-    const sendData = {
-        header: {
-            fileType: "VC",
-            reportType: report,
-            userId: user,
-            credentialId: Date.now(),
-            createdAt: Date.now()
-        }, 
-        credential: {
-            data: reportData
-        }, 
-        signature: {
-            algorithm: "SHA-256",
-            nounce: 1655231637,
-            hash: hash.toString(CryptoJS.enc.Hex)
-        }
-    }
-    
-    axios.post('http://localhost:5050/api/upload', sendData, {
-        headers:{
-            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWMyODNmM2IwN2QzNzFmMzA0MWU5MDkiLCJ1c2VySWQiOiIxMjQiLCJyb2xlIjoiaG9zcGl0YWwiLCJpYXQiOjE3MDcyNDY4NjksImV4cCI6MTcwNzQxOTY2OX0.c6yDu-vw6CqUiLVPuUjt5MS0j1JZ2PS_zmU_l52e9LU"
-        }
-    })
-    .then(function (response) {
-        console.log(response)
-    })
-    .catch(function (error) {
-        console.log(error);
+        console.log(hash.toString(CryptoJS.enc.Hex));
+        const sendData = {
+            header: {
+                fileType: "VC",
+                reportType: report,
+                userId: user,
+                credentialId: Date.now(),
+                createdAt: Date.now(),
+            },
+            credential: {
+                data: reportData,
+            },
+            signature: {
+                algorithm: "SHA-256",
+                nounce: 1655231637,
+                hash: hash.toString(CryptoJS.enc.Hex),
+            },
+        };
+
+        axios
+            .post("http://localhost:5050/api/upload", sendData, {
+                headers: {
+                    Authorization: token
+                },
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     });
-})
+}
 
 let verifiablePresentation = {
     header: {
-        title: "jkdnfg"
+        title: "jkdnfg",
     },
     credentialData: [
         {
@@ -84,10 +87,10 @@ let verifiablePresentation = {
             },
             __v: 0,
         },
-    ]
-}
+    ],
+};
 
-const verifyRecords = () => {
+const verifyRecords = (verifiablePresentation) => {
     let verifyData = [];
     for (const item of verifiablePresentation.credentialData) {
         const content = {
@@ -98,11 +101,113 @@ const verifyRecords = () => {
     }
 
     console.log(verifyData);
-    axios.post('http://localhost:5000/registry/verify', verifyData)
-    .then(function (response) {
-        console.log(response)
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
+    axios
+        .post("http://localhost:5000/registry/verify", verifyData)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 };
+
+if (document.getElementById("loginForm")) {
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const user = document.getElementById("userID").value;
+        const pass = document.getElementById("password").value;
+        const sendData = {
+            userId: user,
+            password: pass,
+        };
+
+        axios
+            .post("http://localhost:5050/api/auth/login", sendData)
+            .then(function (response) {
+                console.log(response);
+                localStorage.setItem('token', response.data.data.token);
+                if(response.data.data.role == "patient"){
+                    window.location.href = '/hospital/PatientDashboard.html';
+                } else{
+                    window.location.href = '/hospital/HospDashboard.html';
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+}
+
+if (document.getElementById("registrationForm")) {
+    const registerForm = document.getElementById("registrationForm");
+
+    registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const userID = document.getElementById("userID").value;
+        const pass = document.getElementById("password").value;
+        const username = document.getElementById("name").value;
+        const publickey = document.getElementById("publicKey").value;
+        const userRole = document.getElementById("role").value;
+
+        const registerFormData = {
+            userId: userID,
+            password: pass,
+            publicKey: publickey,
+            name: username,
+            role: userRole,
+        };
+
+        axios
+            .post("http://localhost:5050/api/auth/register", registerFormData)
+            .then(function (response) {
+                window.location.href = "/hospital/login.html"
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+}
+
+
+if(document.getElementById('searchPatient')){
+    const form = document.getElementById('searchPatientBtn');
+
+    form.addEventListener('click', ()=>{
+        event.preventDefault();
+        const patientId = document.getElementById('patientId').value;
+
+        const data = {
+            userId: patientId
+        }
+
+        const token = localStorage.getItem("token");
+
+        axios
+            .post("http://localhost:5050/api/req/patient", 
+                {userId: patientId}
+            ,{
+                headers:{
+                    Authorization: token
+                }
+            })
+            .then(function (response) {
+                console.log(response);
+                loadPatientHospital(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    })
+}
+
+let patientPuKey;
+
+const loadPatientHospital = (data) =>{
+    console.log(data);
+
+    
+}

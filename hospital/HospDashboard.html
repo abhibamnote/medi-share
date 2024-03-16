@@ -13,7 +13,7 @@
                 <h2>MEDI-SHARE</h2>
             </div>
             <div class="login">
-                <button>Login</button>
+                <button>Logout</button>
             </div>
         </div>
         <div class="content">
@@ -21,7 +21,7 @@
                 <h2>Upload Data</h2>
 
                 <div class="upload-form">
-                    <form id="form">
+                    <form id="reportForm">
                         <div>
                             <label for="reportType">Report Type:</label>
                             <input type="text" id="reportType" name="reportType" required>
@@ -45,12 +45,12 @@
                     <h2>Request Patient Data</h2>
                 </div>
                 <div class="search-patient">
-                    <form action="" method="POST">
-                        <input type="text" placeholder="Search patient using ID">
-                        <button type="submit">Seacrh</button>
+                    <form id="searchPatient">
+                        <input type="text" id="patientId" placeholder="Search patient using ID">
+                        <button id="searchPatientBtn" type="submit">Seacrh</button>
                     </form>
 
-                    <div class="patient-data">
+                    <div class="patient-data" id="patient-data">
 
                     </div>
                 </div>

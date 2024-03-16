@@ -7,6 +7,7 @@ const authenticate = require('../middleware/checkAuth');
 const checkRole = require('../middleware/checkRole');
 const { giveConsent } = require('../controllers/req.controller');
 const User = require('../models/user.model');
+const reqRoute = require('./req.routes');
 
 router.get('/', async (req, res) =>{
     
@@ -18,6 +19,8 @@ router.post('/upload', authenticate, checkRole(["hospital"]), uploadData)
 router.post('/get-key', authenticate, checkRole(['hospital']), requestPublicKey);
 
 router.use('/auth', authRoute);
+
+router.use('/req', reqRoute);
 
 router.get('/view', authenticate, checkRole(["patient"]), getOwnReports)
 
