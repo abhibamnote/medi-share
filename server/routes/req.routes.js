@@ -7,7 +7,7 @@ const authenticate = require('../middleware/checkAuth');
 const checkRole = require('../middleware/checkRole');
 const { giveConsent, getPatient } = require('../controllers/req.controller');
 
-router.post('/give-consent', authenticate, checkRole(["patient"]), giveConsent);
+router.post('/give-consent', authenticate, giveConsent);
 
 router.post('/patient', authenticate, checkRole(["hospital"]), getPatient);
 

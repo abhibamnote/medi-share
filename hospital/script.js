@@ -216,15 +216,10 @@ const loadPatientHospital = (data) =>{
         `
     }
 
-}
-
-const sendDataRequest = (e) => {
-    
     const reqForm = document.getElementById("request-form")
-    
-    // reqForm.addEventListener('submit', ()=>{
+    reqForm.addEventListener('submit', ()=>{
         event.preventDefault()
-        console.log("jaihsdkja")
+        // console.log("jaihsdkja")
         var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         var checkboxValues = [];
     
@@ -233,11 +228,26 @@ const sendDataRequest = (e) => {
         });
     
         console.log(checkboxValues)
-    // })
-    
-    axios
-        .post("http://localhost:5050/api/req/give-consent", {
-            ownerId: , 
-            consent: true
-        })
+        const patientId = document.getElementById('patientId').value;
+        const token = localStorage.getItem("token");
+
+        axios
+            .post("http://localhost:5050/api/req/give-consent", {
+                ownerId: patientId,
+                credentialId: checkboxValues, 
+                consent: true
+            }, 
+            {
+                headers: {
+                    Authorization: token
+                }
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    })
+
 }
