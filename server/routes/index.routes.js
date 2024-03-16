@@ -22,7 +22,7 @@ router.use('/auth', authRoute);
 
 router.use('/req', reqRoute);
 
-router.get('/view', authenticate, checkRole(["patient"]), getOwnReports)
+router.get('/view', authenticate, checkRole(['patient']), getOwnReports)
 
 router.post('/requestData', giveConsent)
 
