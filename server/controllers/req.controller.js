@@ -36,7 +36,7 @@ const getPatient = async (req, res) =>{
 
         const user = await User.findOne({userId: userId});
 
-        const content = await VerifiableCredential.findOne({ 
+        const content = await VerifiableCredential.find({ 
             "header.userId": userId
         })
 
