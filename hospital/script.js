@@ -209,6 +209,7 @@ let patientPuKey;
 const loadPatientHospital = (data) =>{
     console.log(data.content);
     const patientChecklist = document.getElementById("patient-checklist")
+    patientChecklist.innerHTML = ``
     for(let i = 0; i < data.content.length; i++) {
         patientChecklist.innerHTML += `
             <input type="checkbox" value="${data.content[i]._id}">
