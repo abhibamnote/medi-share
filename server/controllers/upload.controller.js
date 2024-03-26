@@ -16,7 +16,7 @@ const requestPublicKey = async (req, res) => {
 const uploadData = async (req, res) => {
     const uploadData = req.body
     const user = req.user;
-    // console.log(uploadData)
+    console.log(uploadData)
     try {
         const result =  await VerifiableCredential.create({
             header: {
@@ -63,7 +63,7 @@ const getOwnReports = async (req, res) => {
     const user = req.user
     try {
         if(!user) throw error
-        const allReports = User.find({ userId: user.userId })
+        const allReports = await VerifiableCredential.find({ userId: user.userId })
         return res.status(200).send(allReports)
     } catch (error) {
         console.log(error)

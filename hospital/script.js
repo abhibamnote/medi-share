@@ -209,6 +209,7 @@ let patientPuKey;
 const loadPatientHospital = (data) =>{
     console.log(data.content);
     const patientChecklist = document.getElementById("patient-checklist")
+    patientChecklist.innerHTML = ``
     for(let i = 0; i < data.content.length; i++) {
         patientChecklist.innerHTML += `
             <input type="checkbox" value="${data.content[i]._id}">
@@ -216,13 +217,8 @@ const loadPatientHospital = (data) =>{
         `
     }
 
-}
-
-const sendDataRequest = (e) => {
-    
     const reqForm = document.getElementById("request-form")
-    
-    // reqForm.addEventListener('submit', ()=>{
+    reqForm.addEventListener('submit', ()=>{
         event.preventDefault()
         var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         var checkboxValues = [];
@@ -232,16 +228,26 @@ const sendDataRequest = (e) => {
         });
     
         console.log(checkboxValues)
-    // })
-    const token = localStorage.getItem("token");
-    
-    axios
-        .post("http://localhost:5050/api/req/give-consent", {
-            consent: true,
-            credId: ["abcd", "rfgh"]
-        },{
-            headers:{
-                Authorization: token
-            }
-        })
+        const patientId = document.getElementById('patientId').value;
+        const token = localStorage.getItem("token");
+
+        axios
+            .post("http://localhost:5050/api/req/give-consent", {
+                ownerId: patientId,
+                credentialId: checkboxValues, 
+                consent: true
+            }, 
+            {
+                headers: {
+                    Authorization: token
+                }
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    })
+
 }
