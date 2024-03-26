@@ -224,7 +224,6 @@ const sendDataRequest = (e) => {
     
     // reqForm.addEventListener('submit', ()=>{
         event.preventDefault()
-        console.log("jaihsdkja")
         var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         var checkboxValues = [];
     
@@ -234,10 +233,15 @@ const sendDataRequest = (e) => {
     
         console.log(checkboxValues)
     // })
+    const token = localStorage.getItem("token");
     
     axios
         .post("http://localhost:5050/api/req/give-consent", {
-            ownerId: , 
-            consent: true
+            consent: true,
+            credId: ["abcd", "rfgh"]
+        },{
+            headers:{
+                Authorization: token
+            }
         })
 }
