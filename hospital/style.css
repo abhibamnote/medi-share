@@ -67,7 +67,6 @@ button:hover {
 .notifications .search-patient #searchPatient input {
     width: 88%;
     padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 3px;
     box-sizing: border-box;
@@ -137,3 +136,4 @@ button:hover {
     border: none;
     font-weight: 600;
 }
+

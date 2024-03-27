@@ -14,5 +14,4 @@ const getData = () => {
         .catch(function (error) {
             console.log(error);
         });
-
 }

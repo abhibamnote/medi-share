@@ -63,7 +63,9 @@ const getOwnReports = async (req, res) => {
     const user = req.user
     try {
         if(!user) throw error
-        const allReports = await VerifiableCredential.find({ userId: user.userId })
+        const allReports = await VerifiableCredential.find({ 
+            "header.userId": user.userId
+        })
         return res.status(200).send(allReports)
     } catch (error) {
         console.log(error)
