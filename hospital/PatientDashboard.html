@@ -29,6 +29,10 @@
                     <h2>Notifications</h2>
                     <button>Refresh</button>
                 </div>
+
+                <div id="permission">
+
+                </div>
             </div>
         </div>
     </div>
@@ -54,13 +58,20 @@
 
     socket.on("permission", (data)=>{
         console.log(data);
+        askPermission(data)
     })
 
-    const sendPermission = () =>{
+    const sendPermission = (flag, hospitalId) =>{
+        let data = {
+            permission : flag
+        };
+        if(flag){
+            data["info"] = requestedFiles;
+        }
+        console.log(flag, hospitalId);
         socket.emit('permissionResponse',{
-            userId: "126",
-            permission: true,
-            data: "somedata"
+            userId: hospitalId,
+            data: data
         })
     }
 </script>

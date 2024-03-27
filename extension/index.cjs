@@ -20,8 +20,13 @@ function generateKeyPairFromMnemonic(mnemonic) {
 
 // Example usage
 // const mnemonic = bip39.generateMnemonic();
-const mnemonic = "stove arm obvious ramp ozone alone tenant cup denial grow corn sight"
+// const mnemonic = "stove arm obvious ramp ozone alone tenant cup denial grow corn sight"
 // console.log(mnemonic);
 const keyPair = generateKeyPairFromMnemonic(mnemonic);
 console.log("Private Key:", keyPair.privateKey);
 console.log("Public Key:", keyPair.publicKey);
+
+const generateEvery = () => {
+    const mnemonic = bip39.generateMnemonic();
+    
+}

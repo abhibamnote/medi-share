@@ -38,7 +38,7 @@ const getPatient = async (req, res) =>{
 
         const content = await VerifiableCredential.find({ 
             "header.userId": userId
-        })
+        }, {credentialData: 0})
 
         if(user){
             return res.status(200).json({

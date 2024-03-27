@@ -46,7 +46,7 @@ if (document.getElementById("reportForm")) {
         axios
             .post("http://localhost:5050/api/upload", sendData, {
                 headers: {
-                    Authorization: token
+                    Authorization: token,
                 },
             })
             .then(function (response) {
@@ -127,11 +127,12 @@ if (document.getElementById("loginForm")) {
             .post("http://localhost:5050/api/auth/login", sendData)
             .then(function (response) {
                 console.log(response);
-                localStorage.setItem('token', response.data.data.token);
-                if(response.data.data.role == "patient"){
-                    window.location.href = '/hospital/PatientDashboard.html';
-                } else{
-                    window.location.href = '/hospital/HospDashboard.html';
+                localStorage.setItem("id", user);
+                localStorage.setItem("token", response.data.data.token);
+                if (response.data.data.role == "patient") {
+                    window.location.href = "/hospital/PatientDashboard.html";
+                } else {
+                    window.location.href = "/hospital/HospDashboard.html";
                 }
             })
             .catch(function (error) {
@@ -152,6 +153,11 @@ if (document.getElementById("registrationForm")) {
         const publickey = document.getElementById("publicKey").value;
         const userRole = document.getElementById("role").value;
 
+        if(publickey.length < 1){
+            alert("Please generate public key");
+            return 0;
+        }
+
         const registerFormData = {
             userId: userID,
             password: pass,
@@ -163,7 +169,7 @@ if (document.getElementById("registrationForm")) {
         axios
             .post("http://localhost:5050/api/auth/register", registerFormData)
             .then(function (response) {
-                window.location.href = "/hospital/login.html"
+                window.location.href = "/hospital/login.html";
             })
             .catch(function (error) {
                 console.log(error);
@@ -171,28 +177,29 @@ if (document.getElementById("registrationForm")) {
     });
 }
 
+if (document.getElementById("searchPatient")) {
+    const form = document.getElementById("searchPatientBtn");
 
-if(document.getElementById('searchPatient')){
-    const form = document.getElementById('searchPatientBtn');
-
-    form.addEventListener('click', ()=>{
+    form.addEventListener("click", () => {
         event.preventDefault();
-        const patientId = document.getElementById('patientId').value;
+        const patientId = document.getElementById("patientId").value;
 
         const data = {
-            userId: patientId
-        }
+            userId: patientId,
+        };
 
         const token = localStorage.getItem("token");
 
         axios
-            .post("http://localhost:5050/api/req/patient", 
-                {userId: patientId}
-            ,{
-                headers:{
-                    Authorization: token
+            .post(
+                "http://localhost:5050/api/req/patient",
+                { userId: patientId },
+                {
+                    headers: {
+                        Authorization: token,
+                    },
                 }
-            })
+            )
             .then(function (response) {
                 console.log(response);
                 loadPatientHospital(response.data.data);
@@ -200,54 +207,92 @@ if(document.getElementById('searchPatient')){
             .catch(function (error) {
                 console.log(error);
             });
-
-    })
+    });
 }
 
 let patientPuKey;
 
-const loadPatientHospital = (data) =>{
+const loadPatientHospital = (data) => {
     console.log(data.content);
-    const patientChecklist = document.getElementById("patient-checklist")
-    patientChecklist.innerHTML = ``
-    for(let i = 0; i < data.content.length; i++) {
+    const patientChecklist = document.getElementById("patient-checklist");
+    patientChecklist.innerHTML = ``;
+    for (let i = 0; i < data.content.length; i++) {
         patientChecklist.innerHTML += `
             <input type="checkbox" value="${data.content[i]._id}">
             <label for="Report Type">${data.content[i].header.reportType}</label>
-        `
+        `;
     }
+};
 
-    const reqForm = document.getElementById("request-form")
-    reqForm.addEventListener('submit', ()=>{
-        event.preventDefault()
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+if(document.getElementById("request-form")) {
+    const reqForm = document.getElementById("request-form");
+    reqForm.addEventListener("submit", () => {
+        event.preventDefault();
+        var checkboxes = document.querySelectorAll(
+            'input[type="checkbox"]:checked'
+        );
         var checkboxValues = [];
-    
-        checkboxes.forEach(function(checkbox) {
+
+        checkboxes.forEach(function (checkbox) {
             checkboxValues.push(checkbox.value);
         });
-    
-        console.log(checkboxValues)
-        const patientId = document.getElementById('patientId').value;
+
+        console.log(checkboxValues);
+        const patientId = document.getElementById("patientId").value;
         const token = localStorage.getItem("token");
 
-        axios
-            .post("http://localhost:5050/api/req/give-consent", {
-                ownerId: patientId,
-                credentialId: checkboxValues, 
-                consent: true
-            }, 
-            {
-                headers: {
-                    Authorization: token
-                }
-            })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        const hospitalId = localStorage.getItem("id");
+
+        const data = {
+            credentials: checkboxValues,
+            hospitalId: hospitalId
+        }
+
+        sendReq(patientId, data);
+    });
+}
+
+const givePermission= () => {
+    axios
+    .post(
+        "http://localhost:5050/api/req/give-consent",
+        {
+            ownerId: patientId,
+            credentialId: checkboxValues,
+            consent: true,
+        },
+        {
+            headers: {
+                Authorization: token,
+            },
+        }
+    )
+    .then(function (response) {
+        console.log(response);
     })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+const displayData = (data) =>{
+    console.log(data);
+
+    
+
+    if(!data.data.permission){
+        document.getElementById('patient-file-data').innerText = "Patient rejected the request";
+        return 0;
+    }
+
+    let someHTML = '';
+    data.data.info.forEach(ele => {
+        someHTML += `
+            <div>Report Type: ${ele.header.reportType}</div>
+            <div>Data: ${ele.credentialData.data}</div>
+        `
+    })
+
+    document.getElementById('patient-file-data').innerHTML = someHTML;
 
 }

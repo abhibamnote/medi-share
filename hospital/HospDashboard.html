@@ -58,6 +58,10 @@
                             <input type="submit">
                         </form>
                     </div>
+
+                    <div id="patient-file-data">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,14 +85,14 @@
         console.log("connected");
     })
 
-    const sendReq = () =>{
+    const sendReq = (patientId, data) =>{
         socket.emit('requestData', {
-            userId: "125",
-            more: "data"
+            userId: patientId,
+            more: data
         })
     }
 
     socket.on("finalSend", (data) => {
-        console.log(data);
+        displayData(data);
     })
 </script>
