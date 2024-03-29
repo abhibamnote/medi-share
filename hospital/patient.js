@@ -14,6 +14,17 @@ const getData = () => {
             console.log(response);
             userFiles = response.data;
             console.log(userFiles);
+            const userCards = document.getElementById('recordBox')
+
+            for (let i = 0; i < userFiles.length; i++) {
+                userCards.innerHTML += `
+                <div class="card">
+                    <h3 class="card-title">${userFiles[i].header.reportType}</h3>
+                    <p class="card-id">${userFiles[i].header.credentialId}</p>
+                    <p class="card-data">${userFiles[i].credentialData.data}</p>
+                </div>
+                `;
+            }
         })
         .catch(function (error) {
             console.log(error);
@@ -28,15 +39,21 @@ const askPermission = (data) => {
         userFiles.forEach(file =>{
             if(ele == file._id){
                 requestedFiles.push(file);
-                permissionHTML +=  `<li>${file.header.reportType}</li>`;
+                permissionHTML +=  `<li class="card">
+                    ${file.header.reportType}                
+                   <div>
+                        <button class="accept" onclick="sendPermission(true, '${hospitalId}')">
+                            Accept
+                        </button>
+                        <button class="reject" onclick="sendPermission(false, '${hospitalId}')">
+                            Reject
+                        </button>
+                    </div>
+                    </li>
+                </ul>`;
             }
         })
     })
-
-    permissionHTML += `
-        </ul>
-        <div><button onclick="sendPermission(true, '${hospitalId}')">Accept</button> <button onclick="sendPermission(false, '${hospitalId}')">Reject</button></div>
-    `
 
     document.getElementById('permission').innerHTML = permissionHTML;
 

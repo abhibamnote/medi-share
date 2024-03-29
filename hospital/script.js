@@ -281,15 +281,18 @@ const displayData = (data) =>{
     
 
     if(!data.data.permission){
-        document.getElementById('patient-file-data').innerText = "Patient rejected the request";
+        document.getElementById('patient-file-data').innerHTML =  `<div class="card"><h3 class="card-title">Patient rejected the request</h3></div>`
         return 0;
     }
 
     let someHTML = '';
     data.data.info.forEach(ele => {
         someHTML += `
-            <div>Report Type: ${ele.header.reportType}</div>
-            <div>Data: ${ele.credentialData.data}</div>
+        <div class="card">
+            <h3 class="card-title">${ele.header.reportType}</h3>
+            <p class="card-id">${ele.header.credentialId}</p>
+            <p class="card-data">${ele.credentialData.data}</p>
+        </div>
         `
     })
 

@@ -137,3 +137,43 @@ button:hover {
     font-weight: 600;
 }
 
+.card {
+    background: rgb(222, 222, 222);
+    padding: 1em;
+    margin: 1em;
+    border-radius: 5px;
+}
+.card-id {
+    border-bottom: 1px solid gray;
+    padding-bottom: 0.5em;
+    font-size: 0.9em;
+}
+.card-data {
+    margin-top: 7px;
+}
+#permission li {
+    display: inline-block;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#permission li button {
+    padding: 0.4em 1em;
+    margin: 0 1em;
+    border: none;
+    border-radius: 1000px;
+    color: white;
+}
+.accept {
+    background: #45a049;
+}
+.reject {
+    background: #e64343;
+}
+
+#patient-file-data {
+    margin-top: 2em;
+    border-top: 1px solid gray;
+    padding-top: 1em;
+}
