@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
+    <button id="somebtn">Generate Keys</button>
     <div id="view">
-        <div class="mnemonic" id="mnemonic">
-            
+        <div class="hide">Save this 12 phrase mnemonic to generate public and private key again.</div>
+        <div class="publickey" id="publickey">
+
+        </div>
+
+        <div class="privatekey" id="privatekey">
+
         </div>
     </div>
 </body>
+
+<style>
+    body {
+        width: 300px;
+        height: 400px;
+        min-height: 400px;
+        background-color: chartreuse;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+<script src="encry.js"></script>
+<script src="background.js"></script>
+<script src="content.js"></script>
+
 </html>

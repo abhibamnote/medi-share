@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "Faker": "^0.7.2"
+  }
+}
