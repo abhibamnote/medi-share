@@ -20,10 +20,21 @@ const getData = () => {
                 console.log(decryptData(userFiles[i].credentialData.data, patientKey))
                 userFiles[i].credentialData.data = decryptData(userFiles[i].credentialData.data, patientKey);
                 userCards.innerHTML += `
-                <div class="card">
-                    <h3 class="card-title">${userFiles[i].header.reportType}</h3>
-                    <p class="card-id">${userFiles[i].header.credentialId}</p>
-                    <p class="card-data">${userFiles[i].credentialData.data}</p>
+                <div class="vp-card" onclick="showVC(${i})">
+                    <div class="vp-header">
+                        <p>File type: ${userFiles[i].header.fileType}</p>
+                        <p>Report type: ${userFiles[i].header.reportType}</p>
+                        <p>Issuer ID: ${userFiles[i].header.issuerId}</p>
+                        <p>User ID: ${userFiles[i].header.userId}</p>
+                        <p>Credential ID: ${userFiles[i].header.credentialId}</p>
+                    </div>
+                    <div class="vp-credential">
+                        <p>Data: ${userFiles[i].credentialData.data}</p>
+                    </div>
+                    <div class="vp-signature">
+                        <p>Algorithm: ${userFiles[i].signature.algorithm}</p>
+                        <p>Hash: ${userFiles[i].signature.hash}</p>
+                    </div>
                 </div>
                 `;
             }
@@ -61,3 +72,51 @@ const askPermission = (data) => {
 
 }
 
+const showVC = (i) => {
+    const popup = document.querySelector(".vc-popup")
+    const darkbg = document.querySelector(".dark-film")
+    popup.classList.add("show-it")
+    darkbg.classList.add("show-it")
+
+    axios
+    .get("http://localhost:5050/api/view", {
+        headers: {
+            Authorization: token
+        },
+    })
+    .then(function (response) {
+        console.log(response);
+        userFiles = response.data;
+        console.log(userFiles);
+        
+        popup.innerHTML = `
+            <div class="vp-header">
+                <p>File type: ${userFiles[i].header.fileType}</p>
+                <p>Report type: ${userFiles[i].header.reportType}</p>
+                <p>Issuer ID: ${userFiles[i].header.issuerId}</p>
+                <p>User ID: ${userFiles[i].header.userId}</p>
+                <p>Credential ID: ${userFiles[i].header.credentialId}</p>
+            </div>
+            <div class="vp-credential">
+                <p>Data: ${userFiles[i].credentialData.data}</p>
+            </div>
+            <div class="vp-signature">
+                <p>Algorithm: ${userFiles[i].signature.algorithm}</p>
+                <p>Hash: ${userFiles[i].signature.hash}</p>
+            </div>
+            <div class="close-btn">
+                <button onclick="closePopup()">Close</button>
+            </div>
+        `;
+    })
+    .catch(function(error){
+        console.log(error)
+    })
+}
+
+const closePopup = () => {
+    const popup = document.querySelector(".vc-popup")
+    const darkbg = document.querySelector(".dark-film")
+    popup.classList.remove("show-it")
+    darkbg.classList.remove("show-it")
+}

@@ -279,27 +279,102 @@ const givePermission= () => {
     });
 }
 
+
+let arg = {}
 const displayData = (data) =>{
     console.log(data);
-
-    
 
     if(!data.data.permission){
         document.getElementById('patient-file-data').innerHTML =  `<div class="card"><h3 class="card-title">Patient rejected the request</h3></div>`
         return 0;
     }
-
+    let headerReport = []
     let someHTML = '';
-    data.data.info.forEach(ele => {
+    // data.data.info = data.data.info.filter((value, index, self) =>
+    //     index === self.findIndex((t) => (
+    //     t.credentialId == value.credentialId
+    // ))
+
+    data.data.info.forEach((ele, index) => {
         someHTML += `
-        <div class="card">
-            <h3 class="card-title">${ele.header.reportType}</h3>
-            <p class="card-id">${ele.header.credentialId}</p>
-            <p class="card-data">${decryptData(ele.credentialData.data, hospitalKey)}</p>
+        <div class="vp-card" onclick="showVC(${ele})">
+            <div class="vp-header">
+                <p>File type: ${ele.header.fileType}</p>
+                <p>Report type: ${ele.header.reportType}</p>
+                <p>Issuer ID: ${ele.header.issuerId}</p>
+                <p>User ID: ${ele.header.userId}</p>
+                <p>Credential ID: ${ele.header.credentialId}</p>
+                </div>
+            <div class="vp-credential">
+            <p>Data: ${decryptData(ele.credentialData.data, hospitalKey)}</p>
+            </div>
+            <div class="vp-signature">
+            <p>Algorithm: ${ele.signature.algorithm}</p>
+            <p>Hash: ${ele.signature.hash}</p>
+            </div>
         </div>
         `
+
+        headerReport.push(ele.header.reportType)
     })
+    
+    let reportHeader = `
+        <div class="vc-header">
+            <p>File type: VC</p>
+            <p>Report type: ${headerReport}</p>
+            <p>Requester ID: ${data.userId}</p>
+            <p>User ID: ${data.data.info[0].header.userId}</p>
+            <p>Credential ID: ${Date.now()}</p>
+        </div>
+        <div class = "vc-data">
+    `
+    const hash = CryptoJS.SHA256(JSON.stringify(data.data));
+    let reportFooter = `
+        </div>
+        <div class="vc-signature">
+            <p>Algorithm: SHA-256</p>
+            <p>Hash: ${hash.toString(CryptoJS.enc.Hex)}</p>
+        </div>
+    `
 
-    document.getElementById('patient-file-data').innerHTML = someHTML;
 
+    document.getElementById('patient-file-data').innerHTML = reportHeader;
+    document.querySelector('.vc-data').innerHTML += someHTML;
+    document.getElementById('patient-file-data').innerHTML += reportFooter;
+    
+}
+
+const showVC = (arg) => {
+    const popup = document.querySelector(".vc-popup")
+    const darkbg = document.querySelector(".dark-film")
+    popup.classList.add("show-it")
+    darkbg.classList.add("show-it")
+    console.log(arg)
+
+    popup.innerHTML = `
+            <div class="vp-header">
+                <p>File type: ${obj.header.fileType}</p>
+                <p>Report type: ${obj.header.reportType}</p>
+                <p>Issuer ID: ${obj.header.issuerId}</p>
+                <p>User ID: ${obj.header.userId}</p>
+                <p>Credential ID: ${obj.header.credentialId}</p>
+            </div>
+            <div class="vp-credential">
+                <p>Data: ${obj.credentialData.data}</p>
+            </div>
+            <div class="vp-signature">
+                <p>Algorithm: ${obj.signature.algorithm}</p>
+                <p>Hash: ${obj.signature.hash}</p>
+            </div>
+            <div class="close-btn">
+                <button onclick="closePopup()">Close</button>
+            </div>
+        `;
+}
+
+const closePopup = () => {
+    const popup = document.querySelector(".vc-popup")
+    const darkbg = document.querySelector(".dark-film")
+    popup.classList.remove("show-it")
+    darkbg.classList.remove("show-it")
 }

@@ -177,3 +177,102 @@ button:hover {
     border-top: 1px solid gray;
     padding-top: 1em;
 }
+
+.vp-card {
+    width: 200px;
+    padding: 10px;
+    background: cornflowerblue;
+    font-size: 0.9em;
+}
+.vp-card:hover {
+    cursor: pointer;
+}
+.vp-card p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis ;
+}
+.vp-header {
+    background-color: #e64343;
+    padding: 10px;
+}
+.vp-credential {
+    padding: 10px;
+    background: burlywood;
+}
+.vp-signature {
+    padding: 10px;
+    background: #4caf50;
+}
+.record-box {
+    display: grid;
+    padding: 1em;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+}
+
+.vc-popup {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    width: 45vw;
+    line-height: 30px;
+    border: 1px solid gray;
+    padding: 0.7em;
+    background: white;
+    border-radius: 0.5em;
+    z-index: 999;
+    display: none;
+}
+.vc-popup:hover {
+    cursor: pointer;
+}
+
+.dark-film {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.471);
+    z-index: 900;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.show-it {
+    display: block !important;
+}
+.close-btn {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.7em;
+}
+.close-btn button {
+    padding: 0.1em 1em;
+}
+
+
+
+
+.vc-header {
+    background: #e64343;
+    padding: 20px;
+}
+.vc-data {
+    display: flex;
+    background-color: burlywood;
+    padding: 10px;
+    justify-content: space-evenly;
+    overflow-x: scroll;
+}
+.vc-signature {
+    padding: 10px;
+    background-color: #4caf50;
+}
+#patient-file-data {
+    background-color: #6495ED;
+    padding: 10px;
+}
+.vp-card {
+    margin: 0px 10px;
+}
