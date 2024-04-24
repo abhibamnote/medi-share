@@ -1,53 +1,23 @@
-// popup.js
-
-document.getElementById('somebtn').addEventListener('click', generateKeys);
-
-    var publicKey;
-    var privateKey;
-    var encrypted;
-    var decrypted;
-
-    function generateKeys() {
-        var rsa = new RSA();
-        rsa.generateKeyPair(function(keyPair) {
-            publicKey = keyPair.publicKey;
-            privateKey = keyPair.privateKey;
-            document.getElementById('publickey').innerText = publicKey;
-            document.getElementById('privatekey').innerText = privateKey;
-        });
-    }
-
-    const encryption = () => {
-        var entropy = 'Testing of RSA algorithm in javascript.';
-        var crypt = new Crypt({
-            rsaStandard: 'RSA-OAEP',
-            entropy: entropy
-        });
-        var rsa = new RSA({
-            entropy: entropy
-        });
-        var message = 'Hello, this is the demo of encryption/decryption in javascript!';
-        encrypted = crypt.encrypt(publicKey, message);
-        console.log('encrypted', encrypted);
-    }
-
-    function Decryption() {
-        var entropy = 'Testing of RSA algorithm in javascript.';
-        var crypt = new Crypt({
-            rsaStandard: 'RSA-OAEP',
-            entropy: entropy
-        });
-        var rsa = new RSA({
-            entropy: entropy
-        });
-        decrypted = crypt.decrypt(privateKey, encrypted);
-        console.log('decrypted', decrypted);
-    }
-
-// Example usage to save data
-saveData("Hello, world!");
-
-// Example usage to retrieve data
-retrieveData(function (data) {
-    console.log("Retrieved data:", data);
+document.getElementById("somebtn").addEventListener("click", () => {
+    window.test();
+    putData()
 });
+
+function putData() {
+    const dataToInject = "Hello from extension!";
+    const privateKey = localStorage.getItem('privateKey')
+    const publicKey = localStorage.getItem('publicKey')
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.executeScript(tabs[0].id, {code: `localStorage.setItem('privateKey', '${privateKey}'); document.getElementById('publicKey').value = '${publicKey}'`});
+    });
+}
+
+function sendDataToPage(data) {
+    var scriptElement = document.createElement("script");
+    scriptElement.textContent = `var injectedVariable = ${JSON.stringify(
+        data
+    )};`;
+    document.documentElement.appendChild(scriptElement);
+    scriptElement.remove();
+}

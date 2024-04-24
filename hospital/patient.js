@@ -17,6 +17,8 @@ const getData = () => {
             const userCards = document.getElementById('recordBox')
 
             for (let i = 0; i < userFiles.length; i++) {
+                console.log(decryptData(userFiles[i].credentialData.data, patientKey))
+                userFiles[i].credentialData.data = decryptData(userFiles[i].credentialData.data, patientKey);
                 userCards.innerHTML += `
                 <div class="card">
                     <h3 class="card-title">${userFiles[i].header.reportType}</h3>

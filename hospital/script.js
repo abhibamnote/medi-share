@@ -10,6 +10,8 @@ if (document.getElementById("reportForm")) {
         // alert("Button clicked")
         const token = localStorage.getItem("token");
 
+        let encReportData = encryptData(reportData, patientKey);
+
         const hashData = {
             header: {
                 fileType: "VC",
@@ -24,6 +26,8 @@ if (document.getElementById("reportForm")) {
         };
         const hash = CryptoJS.SHA256(JSON.stringify(hashData));
 
+
+
         console.log(hash.toString(CryptoJS.enc.Hex));
         const sendData = {
             header: {
@@ -34,7 +38,7 @@ if (document.getElementById("reportForm")) {
                 createdAt: Date.now(),
             },
             credential: {
-                data: reportData,
+                data: encReportData,
             },
             signature: {
                 algorithm: "SHA-256",
@@ -291,7 +295,7 @@ const displayData = (data) =>{
         <div class="card">
             <h3 class="card-title">${ele.header.reportType}</h3>
             <p class="card-id">${ele.header.credentialId}</p>
-            <p class="card-data">${ele.credentialData.data}</p>
+            <p class="card-data">${decryptData(ele.credentialData.data, hospitalKey)}</p>
         </div>
         `
     })

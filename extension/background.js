@@ -2,6 +2,7 @@
 
 // Function to save data to local storage
 function saveData(data) {
+    localStorage.setItem("data", data);
     chrome.storage.local.set({ myData: data }, function () {
         console.log("Data saved successfully");
     });

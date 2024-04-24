@@ -10,14 +10,18 @@
 <body>
     <button id="somebtn">Generate Keys</button>
     <div id="view">
-        <div class="hide">Save this 12 phrase mnemonic to generate public and private key again.</div>
-        <div class="publickey" id="publickey">
+        
+        <h2>Public Key</h2>
+        
+        <textarea rows="7" class="publickey" style="width: 250px;" id="publickey">
 
-        </div>
+        </textarea>
 
-        <div class="privatekey" id="privatekey">
+        <h2>Private Key</h2>
 
-        </div>
+        <textarea rows="7" class="privatekey" style="width: 250px;" id="privatekey">
+
+        </textarea>
     </div>
 </body>
 
@@ -34,8 +38,8 @@
     }
 </style>
 
-<script src="encry.js"></script>
 <script src="background.js"></script>
+<script src="encry.js"></script>
 <script src="content.js"></script>
 
 </html>
